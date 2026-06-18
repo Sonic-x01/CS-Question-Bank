@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS Question Bank — Introduction to Computer Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F6F2;
+  --surface: #FFFFFF;
+  --surface2: #F0EFE9;
+  --border: #E2E0D8;
+  --border2: #CCCAB8;
+  --text-primary: #1A1916;
+  --text-secondary: #6B6960;
+  --text-tertiary: #9B9A93;
+  --accent: #2B5C8A;
+  --accent-light: #EBF1F8;
+  --accent-mid: #B8CCE0;
+  --correct: #1A6B3C;
+  --correct-bg: #EAF5EF;
+  --correct-border: #A3D4B8;
+  --wrong: #B03030;
+  --wrong-bg: #FAECEC;
+  --wrong-border: #E8AAAA;
+  --reveal: #7A5500;
+  --reveal-bg: #FFF8E6;
+  --reveal-border: #F0D080;
+  --tag-network: #1A4F7A;
+  --tag-network-bg: #E8F0F8;
+  --tag-memory: #3D1A7A;
+  --tag-memory-bg: #F0EBF8;
+  --tag-number: #1A6B3C;
+  --tag-number-bg: #EAF5EF;
+  --tag-logic: #7A4A00;
+  --tag-logic-bg: #FFF4E0;
+  --tag-algorithm: #7A1A1A;
+  --tag-algorithm-bg: #F8EAEA;
+  --tag-coding: #1A5A6B;
+  --tag-coding-bg: #E8F5F8;
+  --tag-tf: #4A4A4A;
+  --tag-tf-bg: #F0F0F0;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── LAYOUT ── */
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.logo-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.logo-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+.sidebar-section {
+  padding: 16px 20px 8px;
+}
+
+.sidebar-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-item:hover { background: var(--surface2); color: var(--text-primary); }
+.nav-item.active { background: var(--accent-light); color: var(--accent); font-weight: 500; }
+
+.nav-count {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  background: var(--surface2);
+  color: var(--text-tertiary);
+}
+
+.nav-item.active .nav-count {
+  background: var(--accent-mid);
+  color: var(--accent);
+}
+
+.sidebar-stats {
+  margin-top: auto;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+.stat-label { color: var(--text-secondary); }
+.stat-val { font-weight: 600; color: var(--text-primary); }
+.stat-val.correct { color: var(--correct); }
+.stat-val.wrong { color: var(--wrong); }
+
+/* ── MAIN CONTENT ── */
+.main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  flex: 1;
+  max-width: 380px;
+}
+
+.search-wrap svg { color: var(--text-tertiary); flex-shrink: 0; }
+
+.search-input {
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-primary);
+  width: 100%;
+  outline: none;
+}
+
+.search-input::placeholder { color: var(--text-tertiary); }
+
+.filter-group {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.filter-btn {
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.filter-btn:hover { background: var(--surface2); color: var(--text-primary); }
+.filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.mode-toggle {
+  display: flex;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 2px;
+}
+
+.mode-btn {
+  padding: 6px 14px;
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.mode-btn.active { background: var(--surface); color: var(--text-primary); box-shadow: var(--shadow); }
+
+/* ── CONTENT AREA ── */
+.content {
+  padding: 28px 32px 48px;
+  flex: 1;
+}
+
+.section-heading {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.section-heading h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.q-count-badge {
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+
+/* ── QUESTION CARD ── */
+.q-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow);
+}
+
+.q-card:hover { border-color: var(--border2); }
+
+.q-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.q-number {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  font-family: 'JetBrains Mono', monospace;
+  min-width: 36px;
+}
+
+.q-text-preview {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.q-text-preview code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--surface2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.q-tags {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.tag-network { color: var(--tag-network); background: var(--tag-network-bg); }
+.tag-memory { color: var(--tag-memory); background: var(--tag-memory-bg); }
+.tag-number { color: var(--tag-number); background: var(--tag-number-bg); }
+.tag-logic { color: var(--tag-logic); background: var(--tag-logic-bg); }
+.tag-algorithm { color: var(--tag-algorithm); background: var(--tag-algorithm-bg); }
+.tag-coding { color: var(--tag-coding); background: var(--tag-coding-bg); }
+.tag-tf { color: var(--tag-tf); background: var(--tag-tf-bg); }
+.tag-mcq { color: var(--accent); background: var(--accent-light); }
+
+.q-chevron {
+  color: var(--text-tertiary);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.q-card.open .q-chevron { transform: rotate(180deg); }
+
+.q-card-body {
+  display: none;
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--border);
+}
+
+.q-card.open .q-card-body { display: block; }
+
+.q-full-text {
+  font-size: 15px;
+  color: var(--text-primary);
+  line-height: 1.65;
+  padding: 14px 0 16px;
+}
+
+.q-full-text code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--accent);
+}
+
+/* Options */
+.options-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-primary);
+  text-align: left;
+  line-height: 1.4;
+  transition: all 0.15s;
+}
+
+.option-btn:hover:not(:disabled) { background: var(--accent-light); border-color: var(--accent-mid); }
+.option-btn:disabled { cursor: default; }
+
+.opt-letter {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  transition: all 0.15s;
+}
+
+.option-btn.correct-pick { background: var(--correct-bg); border-color: var(--correct-border); }
+.option-btn.correct-pick .opt-letter { background: var(--correct); border-color: var(--correct); color: #fff; }
+.option-btn.correct-pick span:last-child { color: var(--correct); font-weight: 500; }
+
+.option-btn.wrong-pick { background: var(--wrong-bg); border-color: var(--wrong-border); }
+.option-btn.wrong-pick .opt-letter { background: var(--wrong); border-color: var(--wrong); color: #fff; }
+.option-btn.wrong-pick span:last-child { color: var(--wrong); }
+
+.option-btn.reveal { background: var(--reveal-bg); border-color: var(--reveal-border); }
+.option-btn.reveal .opt-letter { background: var(--reveal); border-color: var(--reveal); color: #fff; }
+.option-btn.reveal span:last-child { color: var(--reveal); font-weight: 500; }
+
+/* True/False options */
+.tf-options { display: flex; gap: 8px; margin-bottom: 14px; }
+.tf-options .option-btn { flex: 1; justify-content: center; }
+
+/* Feedback */
+.feedback-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.feedback-bar.correct { background: var(--correct-bg); color: var(--correct); border: 1px solid var(--correct-border); }
+.feedback-bar.wrong { background: var(--wrong-bg); color: var(--wrong); border: 1px solid var(--wrong-border); }
+
+.feedback-bar svg { flex-shrink: 0; }
+
+/* Answered indicator */
+.answered-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border2);
+  flex-shrink: 0;
+}
+
+.q-card[data-answered="correct"] .answered-dot { background: var(--correct); }
+.q-card[data-answered="wrong"] .answered-dot { background: var(--wrong); }
+
+/* ── QUIZ MODE ── */
+.quiz-mode-wrap {
+  display: none;
+}
+
+.quiz-mode-wrap.active { display: block; }
+.browse-mode-wrap.hidden { display: none; }
+
+.quiz-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  max-width: 680px;
+  margin: 0 auto;
+  box-shadow: var(--shadow);
+}
+
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.quiz-progress-bar-wrap {
+  flex: 1;
+  height: 4px;
+  background: var(--surface2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.quiz-progress-bar { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s; }
+.quiz-progress-text { font-size: 13px; color: var(--text-secondary); white-space: nowrap; }
+
+.quiz-q-tag { margin-bottom: 10px; }
+.quiz-q-text { font-size: 17px; font-weight: 500; line-height: 1.6; margin-bottom: 24px; color: var(--text-primary); }
+.quiz-q-text code { font-family: 'JetBrains Mono', monospace; background: var(--surface2); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; font-size: 14px; color: var(--accent); }
+
+.quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.quiz-option { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); cursor: pointer; font-size: 15px; font-family: inherit; color: var(--text-primary); text-align: left; line-height: 1.4; transition: all 0.15s; }
+.quiz-option:hover:not(:disabled) { background: var(--accent-light); border-color: var(--accent-mid); }
+.quiz-option:disabled { cursor: default; }
+.quiz-option .opt-letter { width: 30px; height: 30px; font-size: 12px; }
+.quiz-option.correct-pick { background: var(--correct-bg); border-color: var(--correct-border); }
+.quiz-option.correct-pick .opt-letter { background: var(--correct); border-color: var(--correct); color: #fff; }
+.quiz-option.wrong-pick { background: var(--wrong-bg); border-color: var(--wrong-border); }
+.quiz-option.wrong-pick .opt-letter { background: var(--wrong); border-color: var(--wrong); color: #fff; }
+.quiz-option.reveal { background: var(--reveal-bg); border-color: var(--reveal-border); }
+.quiz-option.reveal .opt-letter { background: var(--reveal); border-color: var(--reveal); color: #fff; }
+
+.quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+.quiz-nav-btn { display: flex; align-items: center; gap: 6px; padding: 9px 18px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); font-size: 14px; font-family: inherit; font-weight: 500; color: var(--text-primary); cursor: pointer; transition: all 0.15s; }
+.quiz-nav-btn:hover:not(:disabled) { background: var(--surface2); }
+.quiz-nav-btn:disabled { opacity: 0.35; cursor: default; }
+.quiz-nav-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.quiz-nav-btn.primary:hover:not(:disabled) { background: #234d78; }
+
+/* ── RESULTS CARD ── */
+.results-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.results-score { font-size: 64px; font-weight: 600; color: var(--text-primary); line-height: 1; }
+.results-score-label { font-size: 15px; color: var(--text-secondary); margin-top: 8px; }
+.results-grade { font-size: 18px; font-weight: 600; margin-top: 16px; }
+.results-grade.excellent { color: var(--correct); }
+.results-grade.good { color: #2B6CB0; }
+.results-grade.pass { color: #7A5500; }
+.results-grade.fail { color: var(--wrong); }
+
+.results-breakdown {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 28px 0;
+}
+
+.rb-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 12px;
+}
+
+.rb-num { font-size: 28px; font-weight: 600; }
+.rb-num.c { color: var(--correct); }
+.rb-num.w { color: var(--wrong); }
+.rb-num.s { color: var(--text-tertiary); }
+.rb-lbl { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+
+.restart-btn {
+  padding: 11px 28px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.restart-btn:hover { background: #234d78; }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+}
+
+.empty-state svg { margin-bottom: 16px; color: var(--text-tertiary); }
+.empty-state p { font-size: 14px; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; flex-direction: row; flex-wrap: wrap; border-right: none; border-bottom: 1px solid var(--border); }
+  .sidebar-logo { flex: 1; }
+  .sidebar-stats { margin-top: 0; border-top: none; border-left: 1px solid var(--border); }
+  .content { padding: 20px 16px 40px; }
+  .topbar { padding: 12px 16px; flex-wrap: wrap; }
+  .search-wrap { max-width: 100%; flex: 1 1 100%; }
+  .options-list { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 580px) {
+  .filter-group { display: none; }
+  .quiz-card { padding: 20px; }
+  .results-breakdown { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-tag">Mansoura University</div>
+      <div class="logo-title">Intro. Computer Science</div>
+      <div class="logo-sub">Question Bank — Gen 102</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Browse by topic</div>
+      <div class="sidebar-nav" id="sidebar-nav">
+        <button class="nav-item active" data-filter="all" onclick="filterTopic('all',this)">
+          All Questions <span class="nav-count" id="cnt-all">0</span>
+        </button>
+        <button class="nav-item" data-filter="network" onclick="filterTopic('network',this)">
+          Networks <span class="nav-count" id="cnt-network">0</span>
+        </button>
+        <button class="nav-item" data-filter="memory" onclick="filterTopic('memory',this)">
+          Memory &amp; Storage <span class="nav-count" id="cnt-memory">0</span>
+        </button>
+        <button class="nav-item" data-filter="number" onclick="filterTopic('number',this)">
+          Number Systems <span class="nav-count" id="cnt-number">0</span>
+        </button>
+        <button class="nav-item" data-filter="logic" onclick="filterTopic('logic',this)">
+          Logic Operations <span class="nav-count" id="cnt-logic">0</span>
+        </button>
+        <button class="nav-item" data-filter="coding" onclick="filterTopic('coding',this)">
+          Data Representation <span class="nav-count" id="cnt-coding">0</span>
+        </button>
+        <button class="nav-item" data-filter="algorithm" onclick="filterTopic('algorithm',this)">
+          Algorithms <span class="nav-count" id="cnt-algorithm">0</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Browse by type</div>
+      <div class="sidebar-nav">
+        <button class="nav-item" data-filter="mcq" onclick="filterTopic('mcq',this)">
+          Multiple Choice <span class="nav-count" id="cnt-mcq">0</span>
+        </button>
+        <button class="nav-item" data-filter="tf" onclick="filterTopic('tf',this)">
+          True / False <span class="nav-count" id="cnt-tf">0</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sidebar-stats">
+      <div class="sidebar-section-label" style="margin-bottom:10px">Session stats</div>
+      <div class="stat-row"><span class="stat-label">Answered</span><span class="stat-val" id="stat-answered">0</span></div>
+      <div class="stat-row"><span class="stat-label">Correct</span><span class="stat-val correct" id="stat-correct">0</span></div>
+      <div class="stat-row"><span class="stat-label">Wrong</span><span class="stat-val wrong" id="stat-wrong">0</span></div>
+      <div class="stat-row"><span class="stat-label">Accuracy</span><span class="stat-val" id="stat-acc">—</span></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-input" type="text" placeholder="Search questions…" oninput="searchQuestions(this.value)" id="search-input">
+      </div>
+      <div class="filter-group">
+        <button class="filter-btn active" id="filter-all" onclick="filterAnswered('all',this)">All</button>
+        <button class="filter-btn" id="filter-unanswered" onclick="filterAnswered('unanswered',this)">Unanswered</button>
+        <button class="filter-btn" id="filter-correct" onclick="filterAnswered('correct',this)">Correct</button>
+        <button class="filter-btn" id="filter-wrong" onclick="filterAnswered('wrong',this)">Wrong</button>
+      </div>
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="mode-browse" onclick="setMode('browse')">Browse</button>
+        <button class="mode-btn" id="mode-quiz" onclick="setMode('quiz')">Quiz mode</button>
+      </div>
+    </div>
+
+    <!-- BROWSE MODE -->
+    <div class="content browse-mode-wrap" id="browse-wrap">
+      <div class="section-heading">
+        <h2 id="section-title">All Questions</h2>
+        <span class="q-count-badge" id="q-count-label">0 questions</span>
+      </div>
+      <div class="q-grid" id="q-grid"></div>
+      <div class="empty-state" id="empty-state" style="display:none">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <p>No questions match your search or filter.</p>
+      </div>
+    </div>
+
+    <!-- QUIZ MODE -->
+    <div class="content quiz-mode-wrap" id="quiz-wrap">
+      <div id="quiz-inner"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  // ──────────────────────────────────────────────
+  // NETWORKS
+  // ──────────────────────────────────────────────
+  {id:1, type:'mcq', topic:'network', text:'The components of a typical network include ……………',
+    opts:['Server','FireWire','Workstation','Both server and workstation (a &amp; c)'], ans:3},
+  {id:2, type:'mcq', topic:'network', text:'A ……… is a group of computers and associated devices that are linked together to facilitate sharing information.',
+    opts:['Network','FireWire','Workstation','Otherwise'], ans:0},
+  {id:3, type:'mcq', topic:'network', text:'Features of WAN include:',
+    opts:['Two or more WANs connected','Small geographic area','Typically use public or leased lines','Otherwise'], ans:2},
+  {id:4, type:'mcq', topic:'network', text:'A ……… is a cycle per second.',
+    opts:['Hertz','Gigahertz','Byte','Kilobyte'], ans:0},
+
+  // ──────────────────────────────────────────────
+  // HARDWARE / PORTS / EXPANSION
+  // ──────────────────────────────────────────────
+  {id:5, type:'mcq', topic:'memory', text:'Which of the following is <em>not</em> an expansion card?',
+    opts:['AMD','Sound','NIC','Video'], ans:0},
+  {id:6, type:'mcq', topic:'memory', text:'…… card is connected to the computer monitor and is used to display information on the monitor.',
+    opts:['AMD','Sound','NIC','Video'], ans:3},
+  {id:7, type:'mcq', topic:'memory', text:'…… is connected to other computers so that information can be exchanged between them.',
+    opts:['AMD','Sound','NIC','Video'], ans:2},
+  {id:8, type:'mcq', topic:'memory', text:'…… card converts audio signals (microphone or audio tape) which can be stored as a computer audio file.',
+    opts:['AMD','Sound','NIC','Video'], ans:1},
+  {id:9, type:'mcq', topic:'memory', text:'……… Used for external modems and older computer mouse.',
+    opts:['Serial Port','Parallel Port','PS/2 Port','VGA Port'], ans:0},
+  {id:10, type:'mcq', topic:'memory', text:'…………… Used for scanners and printers.',
+    opts:['Serial Port','Parallel Port','PS/2 Port','VGA Port'], ans:1},
+  {id:11, type:'mcq', topic:'memory', text:'………… Used for old computer keyboard and mouse.',
+    opts:['Serial Port','Parallel Port','PS/2 Port','VGA Port'], ans:2},
+  {id:12, type:'mcq', topic:'memory', text:'……………….. Connects monitor to a computer\'s video card.',
+    opts:['Serial Port','Parallel Port','PS/2 Port','VGA Port'], ans:3},
+  {id:13, type:'mcq', topic:'memory', text:'………….. Connects microphone and speakers to the sound card of the computer.',
+    opts:['Socket','Ethernet Port','Port','All of them'], ans:0},
+  {id:14, type:'mcq', topic:'memory', text:'Computer power supply is a ………… device.',
+    opts:['Input device','Output device','Ports and connections','None of the above'], ans:2},
+  {id:15, type:'mcq', topic:'memory', text:'……… is an output device used to show results in hard copy (paper) form.',
+    opts:['Monitor','Printer','Speaker','Plotter'], ans:1},
+  {id:16, type:'mcq', topic:'memory', text:'……………… represents the brain of the computer.',
+    opts:['Central Processing Unit','System Unit Case','Motherboard','Otherwise'], ans:0},
+  {id:17, type:'mcq', topic:'memory', text:'Compact disc is the ……',
+    opts:['CD-ROM','DVD-ROM','Hard disk','Flash drive'], ans:0},
+  {id:18, type:'mcq', topic:'memory', text:'The parts that make up a computer are divided into ………… subsystems.',
+    opts:['1','2','3','None of the above'], ans:2},
+
+  // ──────────────────────────────────────────────
+  // MEMORY TYPES
+  // ──────────────────────────────────────────────
+  {id:19, type:'mcq', topic:'memory', text:'……… is the memory that retains its contents even after the computer is turned off.',
+    opts:['RAM','EPRAM','ROM','Both a and b'], ans:2},
+  {id:20, type:'mcq', topic:'memory', text:'Terabyte has exact number of bytes equal to ………………',
+    opts:['2³⁰ bytes','2⁴⁰ bytes','2⁴⁰ Kilobytes','2³⁰ Gigabytes'], ans:1},
+  {id:21, type:'mcq', topic:'memory', text:'Megabyte has exact number of bytes equal to ………………',
+    opts:['2³⁰ bytes','2²⁰ bytes','2⁴⁰ Kilobytes','2³⁰ Gigabytes'], ans:1},
+  {id:22, type:'mcq', topic:'memory', text:'Gigabyte has exact number of bytes equal to ………………',
+    opts:['2⁵⁰ bytes','2³⁰ bytes','2⁴⁰ Kilobytes','2³⁰ Gigabytes'], ans:1},
+  {id:23, type:'mcq', topic:'memory', text:'Petabyte has exact number of bytes equal to ………………',
+    opts:['2³⁰ bytes','2⁵⁰ bytes','2⁴⁰ Kilobytes','2³⁰ Gigabytes'], ans:1},
+  {id:24, type:'mcq', topic:'memory', text:'Which register traces the instruction that is currently being executed?',
+    opts:['Program counter','Data Register','Instruction Register','All of them'], ans:2},
+  {id:25, type:'mcq', topic:'memory', text:'…………… are fast stand-alone storage locations that hold data temporarily.',
+    opts:['Pen Drive','Hard Disk','Expansion cards','Registers'], ans:3},
+  {id:26, type:'mcq', topic:'memory', text:'Which of the following is an <em>invalid</em> type of memory?',
+    opts:['DRAM','ROM','PRAM','EPROM'], ans:2},
+  {id:27, type:'mcq', topic:'memory', text:'………… is where information is stored and retrieved by the CPU.',
+    opts:['Memory','Control unit','Operating system','None of the above'], ans:0},
+  {id:28, type:'mcq', topic:'memory', text:'…………… can be read from and written to by the user.',
+    opts:['ROM','PROM','RAM','None of the above'], ans:2},
+  {id:29, type:'mcq', topic:'memory', text:'……… is volatile memory.',
+    opts:['ROM','PROM','RAM','None of the above'], ans:2},
+  {id:30, type:'mcq', topic:'memory', text:'……… is non-volatile memory.',
+    opts:['ROM','SRAM','RAM','None of the above'], ans:0},
+  {id:31, type:'mcq', topic:'memory', text:'Total number of uniquely identifiable locations in memory is called the …………',
+    opts:['Registers','Values','Address space','Otherwise'], ans:2},
+  {id:32, type:'mcq', topic:'memory', text:'To store two bytes, you need …………… electronic switches.',
+    opts:['2','4','8','16'], ans:3},
+  {id:33, type:'mcq', topic:'memory', text:'……………… performs arithmetic and logical operations.',
+    opts:['ALU','CPU','Control unit','Memory'], ans:0},
+  {id:34, type:'mcq', topic:'memory', text:'A ……… is the smallest unit of data that can be stored in a computer; it is either 0 or 1.',
+    opts:['Byte','Bit','Kilobyte','Otherwise'], ans:1},
+  {id:35, type:'mcq', topic:'memory', text:'The size of the pixel depends on what is called the ………………',
+    opts:['Code','Resolution','Bitmap graphic','Otherwise'], ans:1},
+
+  // ──────────────────────────────────────────────
+  // NUMBER SYSTEMS & BINARY REPRESENTATIONS
+  // ──────────────────────────────────────────────
+  {id:36, type:'mcq', topic:'number', text:'To convert the decimal number 244 to binary we get ……',
+    opts:['11110100₂','11010100₂','11110101₂','None of the above'], ans:0},
+  {id:37, type:'mcq', topic:'number', text:'To store +7 in an 8-bit memory location we get ……',
+    opts:['00000110','00000111','0000111','None of the above'], ans:1},
+  {id:38, type:'mcq', topic:'number', text:'The binary number (1011.1110)₂ in decimal format is ………',
+    opts:['11.675','13.875','13.75','11.875'], ans:1},
+  {id:39, type:'mcq', topic:'number', text:'The decimal equivalent of (1010000)₂ will be …………',
+    opts:['96','80','78','84'], ans:1},
+  {id:40, type:'mcq', topic:'number', text:'The hexadecimal equivalent of the bit pattern <code>110011100010</code> is ……',
+    opts:['xCE2','x0E2','x24C','None of the above'], ans:0},
+  {id:41, type:'mcq', topic:'number', text:'The hexadecimal equivalent of the bit pattern <code>001001001100</code> is ……',
+    opts:['x24C','x0E2','xCE2','x4C2'], ans:0},
+  {id:42, type:'mcq', topic:'number', text:'The octal equivalent of the bit pattern <code>1100010</code> is ………',
+    opts:['562₈','24₈','142₈','None of the above'], ans:2},
+  {id:43, type:'mcq', topic:'number', text:'The bit pattern for x87F is ……………',
+    opts:['111111100001','111101111000','100001111111','Otherwise'], ans:1},
+
+  // Sign and magnitude
+  {id:44, type:'mcq', topic:'number', text:'The result for storing +7 in an 8-bit memory location using sign-and-magnitude representation is ………………',
+    opts:['10000111','00000101','00000110','00000111'], ans:3},
+  {id:45, type:'mcq', topic:'number', text:'The result for storing −258 in a 16-bit memory location using sign-and-magnitude representation is ………………',
+    opts:['1000000100000011','1000000100000000','1000000100000110','1000000100000010'], ans:3},
+  {id:46, type:'mcq', topic:'number', text:'The interpretation in decimal of the number <code>10111011</code> as a sign-and-magnitude integer is …………',
+    opts:['-59','-30','59','30'], ans:0},
+  {id:47, type:'mcq', topic:'number', text:'The interpretation in decimal of the number <code>00111011</code> as a sign-and-magnitude integer is ………',
+    opts:['-30','-59','+59','30'], ans:2},
+
+  // One's complement
+  {id:48, type:'mcq', topic:'number', text:"To store −7 in an 8-bit memory location using one's complement representation, we get ……………",
+    opts:['11111000','1111100','01111001','None of the above'], ans:0},
+  {id:49, type:'mcq', topic:'number', text:"To interpret <code>11110110</code> in decimal if stored as a one's complement integer, the result is ……",
+    opts:['9','-9','19','-19'], ans:1},
+
+  // Two's complement
+  {id:50, type:'mcq', topic:'number', text:"To store −124 in an 8-bit memory location using two's complement representation, we get …………",
+    opts:['10000100','1000010','10000101','None of the above'], ans:0},
+  {id:51, type:'mcq', topic:'number', text:"To interpret <code>11110110</code> in decimal if stored as a two's complement integer, we get ………",
+    opts:['-20','20','10','-10'], ans:0},
+  {id:52, type:'mcq', topic:'number', text:"Storing +7 in an 8-bit memory location using two's complement representation gives ……………",
+    opts:['00000110','00000111','10000111','10000110'], ans:1},
+  {id:53, type:'mcq', topic:'number', text:"Storing −40 in a 16-bit memory location using two's complement representation gives ……………",
+    opts:['0111111111011000','1111111111011000','1011111111011000','1111111111011001'], ans:1},
+  {id:54, type:'mcq', topic:'number', text:"The result of subtraction 01100101 − 00111110 (two's complement system) is:",
+    opts:['-219','93','163','Overflow'], ans:1},
+  {id:55, type:'mcq', topic:'number', text:"Subtract 62 from 101 in two's complement format. The result is …………",
+    opts:['00100111','01100101','11000010','100100111'], ans:0},
+
+  // Floating point
+  {id:56, type:'mcq', topic:'number', text:'If the normalized binary number +2⁻⁶ × 1.11001 is represented as a 32-bit floating-point number, the exponent is:',
+    opts:['111001','-6','01111001','11001'], ans:2},
+  {id:57, type:'mcq', topic:'number', text:'Interpretation of <code>11111110</code> if the representation is Excess_127 will be …………',
+    opts:['182','127','1270','10'], ans:0},
+  {id:58, type:'mcq', topic:'number', text:'Transform of the fraction 0.4 to a binary of 6 bits is ………………',
+    opts:['0.011001','0.011000','0.001001','0.011011'], ans:0},
+  {id:59, type:'mcq', topic:'number', text:'The interpretation of the 32-bit floating-point number <code>10111001111001100000000000000000</code> into normalized binary is:',
+    opts:['-2⁻¹² × 1.110011','-2⁻² × 1.51','-2¹² × 1.51','-2² × 1.1101'], ans:0},
+
+  // Bit shifting
+  {id:60, type:'mcq', topic:'number', text:'To multiply the number represented by <code>11101001</code> by two, you apply:',
+    opts:['Left shifting once','Left shifting twice','Right shifting once','Right shifting twice'], ans:0},
+  {id:61, type:'mcq', topic:'number', text:'To divide the number represented by <code>00111100</code> by four, you apply:',
+    opts:['Left shifting twice','Right shifting once','Right shifting twice','Right shifting four times'], ans:2},
+  {id:62, type:'mcq', topic:'number', text:'Shifting the bit pattern <code>00111011</code> to the left gives ………………',
+    opts:['01110110','10011101','00011100','Otherwise'], ans:0},
+
+  // Addition
+  {id:63, type:'mcq', topic:'number', text:'The result of adding the binary numbers <code>11011101</code> and <code>00010100</code> is:',
+    opts:['01110001','11110001','11001111','Overflow'], ans:1},
+
+  // ──────────────────────────────────────────────
+  // LOGIC OPERATIONS
+  // ──────────────────────────────────────────────
+  {id:64, type:'mcq', topic:'logic', text:'If the logical operation is applied to only one input, it is a ……………… operation.',
+    opts:['Unary','Binary','Both a and b','Decrement'], ans:0},
+  {id:65, type:'mcq', topic:'logic', text:'The simplest arithmetic unary operation is …………',
+    opts:['Addition','Subtraction','Multiplication','Decrement'], ans:3},
+  {id:66, type:'mcq', topic:'logic', text:'Which of the following is <em>not</em> a binary operator?',
+    opts:['AND','OR','XOR','NOT'], ans:3},
+  {id:67, type:'mcq', topic:'logic', text:'The result of applying the NOT operator on the bit pattern <code>10111001</code> is:',
+    opts:['00111001','01000110','11000110','Otherwise'], ans:1},
+  {id:68, type:'mcq', topic:'logic', text:'The NOT operator on the bit pattern <code>10011000</code> is:',
+    opts:['01100111','11001000','01100110','Otherwise'], ans:2},
+  {id:69, type:'mcq', topic:'logic', text:'The result of applying AND on bit patterns <code>00111000</code> and <code>10010101</code> is:',
+    opts:['10101101','10111101','00010000','Otherwise'], ans:2},
+  {id:70, type:'mcq', topic:'logic', text:'The result of applying OR on bit patterns <code>10111001</code> and <code>01110100</code> is:',
+    opts:['11111101','11001101','00110000','Otherwise'], ans:0},
+  {id:71, type:'mcq', topic:'logic', text:'Use the OR operator on bit patterns <code>10011000</code> and <code>00110101</code>. The result is:',
+    opts:['10110111','11010101','10111101','01000010'], ans:2},
+  {id:72, type:'mcq', topic:'logic', text:'If the result of applying a logical operator on <code>11110001</code> and <code>11001100</code> is <code>00111101</code>, the applied operation was:',
+    opts:['NOT','AND','OR','XOR'], ans:3},
+  {id:73, type:'mcq', topic:'logic', text:'Which operator should be used along with a suitable mask to <em>set</em> some bits in a bit pattern?',
+    opts:['NOT','AND','OR','XOR'], ans:2},
+  {id:74, type:'mcq', topic:'logic', text:'Which operator should be used to <em>flip</em> a specific bit in a bit pattern?',
+    opts:['SET','UNSET','XOR','None of them'], ans:2},
+  {id:75, type:'mcq', topic:'logic', text:'To set a bit using OR, use ……………… for the corresponding bit in the mask.',
+    opts:['0','1','2','Otherwise'], ans:1},
+  {id:76, type:'mcq', topic:'logic', text:'Which is a suitable mask to flip the 4 left-most bits of pattern <code>10100111</code>?',
+    opts:['10101000','11110000','01010111','01011000'], ans:1},
+  {id:77, type:'mcq', topic:'logic', text:'For each pair of input bits in ………, the result is 1 if both bits are 1; otherwise 0.',
+    opts:['OR','AND','XOR','Otherwise'], ans:1},
+  {id:78, type:'mcq', topic:'logic', text:'For each pair of input bits in ………, the result is 0 if both bits are 0; otherwise 1.',
+    opts:['OR','AND','XOR','Otherwise'], ans:0},
+
+  // ──────────────────────────────────────────────
+  // DATA REPRESENTATION / CODING
+  // ──────────────────────────────────────────────
+  {id:79, type:'mcq', topic:'coding', text:'In ASCII code, the pattern <code>1111111</code> represents the ………… character.',
+    opts:['Null','Delete','Enter','Shift out'], ans:1},
+  {id:80, type:'mcq', topic:'coding', text:'In ASCII code, the pattern <code>0000000</code> represents the ………… character.',
+    opts:['Null','Delete','Enter','Shift out'], ans:0},
+  {id:81, type:'mcq', topic:'coding', text:'If the ASCII code for "A" is 1000001, then the ASCII code for "a" is ………',
+    opts:['1001101','1100001','1110011','1010001'], ans:1},
+  {id:82, type:'mcq', topic:'coding', text:'If there are 512 symbols in a language, the number of bits needed per symbol is …………',
+    opts:['8 bits','9 bits','16 bits','9 bytes'], ans:1},
+  {id:83, type:'mcq', topic:'coding', text:'In a set with 256 symbols, each symbol requires a bit pattern length of ………… bits.',
+    opts:['4','8','6','7'], ans:1},
+  {id:84, type:'mcq', topic:'coding', text:'…………… uses a 7-bit pattern.',
+    opts:['ASCII code','EBCDIC code','Unicode','ISO code'], ans:0},
+  {id:85, type:'mcq', topic:'coding', text:'…………… uses an 8-bit pattern.',
+    opts:['ASCII code','EBCDIC code','Unicode','ISO code'], ans:1},
+  {id:86, type:'mcq', topic:'coding', text:'…………… uses a 16-bit pattern.',
+    opts:['ASCII code','EBCDIC code','Unicode','ISO code'], ans:2},
+  {id:87, type:'mcq', topic:'coding', text:'…………… uses a 32-bit pattern.',
+    opts:['ASCII code','EBCDIC code','Unicode','ISO code'], ans:3},
+  {id:88, type:'mcq', topic:'coding', text:'In ISO code, each symbol is ……………… bits.',
+    opts:['7','8','16','32'], ans:1},
+  {id:89, type:'mcq', topic:'coding', text:'The Unicode code uses …………… bytes for each symbol.',
+    opts:['2','8','16','32'], ans:0},
+  {id:90, type:'mcq', topic:'coding', text:'Data are ……………… when they enter a computer and ……………… when presented to the user.',
+    opts:['destroyed, decoded','decoded, coded','coded, decoded','otherwise'], ans:2},
+  {id:91, type:'mcq', topic:'coding', text:'…………… is a raw material from which you can draw conclusions.',
+    opts:['Information','Data','Both a and b','None of the above'], ans:1},
+  {id:92, type:'mcq', topic:'coding', text:'…………… is knowledge, intelligence, or a piece of data with special meaning.',
+    opts:['Information','Data','Both a and b','None of the above'], ans:0},
+  {id:93, type:'mcq', topic:'coding', text:'………… means measuring the value of a signal at equal intervals.',
+    opts:['Sampling','Quantization','Coding','Otherwise'], ans:0},
+  {id:94, type:'mcq', topic:'coding', text:'For an image made only of black and white dots, each pixel is represented by ……… pattern(s).',
+    opts:['1-bit','2-bytes','4-bits','3-bits'], ans:0},
+  {id:95, type:'mcq', topic:'coding', text:'For an image made of four levels of gray scale, each pixel is represented by ……… pattern(s).',
+    opts:['2-bits','2-bytes','4-bits','3-bits'], ans:0},
+  {id:96, type:'mcq', topic:'coding', text:'………… is an example of a graphics-based operating system.',
+    opts:['Windows','DOS','Unix','None of the above'], ans:0},
+  {id:97, type:'mcq', topic:'coding', text:'Computer memory just stores data as ……………',
+    opts:['Text','Bit patterns','Numbers','Characters'], ans:1},
+
+  // ──────────────────────────────────────────────
+  // ALGORITHMS
+  // ──────────────────────────────────────────────
+  {id:98, type:'mcq', topic:'algorithm', text:'…………… is a step-by-step procedure for solving a problem.',
+    opts:['Register','Code','Flowchart','Algorithm'], ans:3},
+  {id:99, type:'mcq', topic:'algorithm', text:'………… is a pictorial representation of an algorithm.',
+    opts:['Register','Code','Flowchart','Pseudocode'], ans:2},
+  {id:100, type:'mcq', topic:'algorithm', text:'The ……… construct depends on a test condition.',
+    opts:['Sequence','Decision','Repetition','None of the above'], ans:1},
+  {id:101, type:'mcq', topic:'algorithm', text:'The ……… instruction is the key in the decision construct.',
+    opts:['IF','FOR','RETURN','None of the above'], ans:0},
+  {id:102, type:'mcq', topic:'algorithm', text:'An algorithm must have no ……… loop.',
+    opts:['Finite','Infinite','Both a and b','None of the above'], ans:1},
+  {id:103, type:'mcq', topic:'algorithm', text:'The initialization value of the variable <code>sum</code> in a summation algorithm is ……………',
+    opts:['-1','0','1','None of the above'], ans:1},
+  {id:104, type:'mcq', topic:'algorithm', text:'………… is the process by which data are arranged according to their values.',
+    opts:['Sorting','Searching','Recursion','None of the above'], ans:0},
+  {id:105, type:'mcq', topic:'algorithm', text:'………… is the process of finding the location of a target among a list of objects.',
+    opts:['Sorting','Searching','Recursion','None of the above'], ans:1},
+  {id:106, type:'mcq', topic:'algorithm', text:'A binary search starts by testing the element at the ………… of the list.',
+    opts:['First','Last','Middle','None of the above'], ans:2},
+  {id:107, type:'mcq', topic:'algorithm', text:'The selection sort uses two loops; the ……… loop finds the smallest element in the unsorted list.',
+    opts:['Outer','Inner','Nested','None of the above'], ans:1},
+  {id:108, type:'mcq', topic:'algorithm', text:'Recursive definition of factorial n is fact(n) = ……',
+    opts:['n − fact(n−1)','n + fact(n−1)','n × fact(n+1)','n × fact(n−1)'], ans:3},
+
+  // ══════════════════════════════════════════════
+  // TRUE / FALSE
+  // ══════════════════════════════════════════════
+  {id:200, type:'tf', topic:'network', text:'Metropolitan Area Network (MAN) is used to connect networks across different countries.', ans:false},
+  {id:201, type:'tf', topic:'network', text:'WAN connects devices within a limited area (home or a small group of offices).', ans:false},
+  {id:202, type:'tf', topic:'network', text:'The operating system can be either text-based (DOS) or graphics-based (Windows).', ans:true},
+  {id:203, type:'tf', topic:'memory', text:'DVD has more storage capacity than CD.', ans:true},
+  {id:204, type:'tf', topic:'memory', text:'Computer memory just stores the data as bit patterns.', ans:true},
+  {id:205, type:'tf', topic:'memory', text:'Images are represented in a computer <em>only</em> by bitmap graphic.', ans:false},
+  {id:206, type:'tf', topic:'memory', text:'System Unit Case is the main body of computer hardware.', ans:true},
+  {id:207, type:'tf', topic:'memory', text:'Central Processing Unit represents the brain of the computer.', ans:true},
+  {id:208, type:'tf', topic:'coding', text:'In Bitmap Graphic method, an image is decomposed into a combination of curves and lines.', ans:false},
+  {id:209, type:'tf', topic:'number', text:'A 4-bit pattern can be represented by a hexadecimal digit, and vice versa.', ans:true},
+  {id:210, type:'tf', topic:'number', text:'A 3-bit pattern can be represented by a hexadecimal digit, and vice versa.', ans:false},
+  {id:211, type:'tf', topic:'number', text:'A 3-bit pattern can be represented by an octal digit, and vice versa.', ans:true},
+  {id:212, type:'tf', topic:'number', text:'Each octal digit can represent exactly 3 bits.', ans:true},
+  {id:213, type:'tf', topic:'number', text:"In Two's Complement system there is only one representation of zero.", ans:true},
+  {id:214, type:'tf', topic:'number', text:"There are two representations of 0 in one's complement.", ans:true},
+  {id:215, type:'tf', topic:'number', text:'Overflow is an error that occurs when you try to store a number outside the range defined by the allocation.', ans:true},
+  {id:216, type:'tf', topic:'number', text:"To subtract two numbers in two's complement, negate the <em>first</em> number and then add the two numbers.", ans:false},
+  {id:217, type:'tf', topic:'number', text:'The number of unique numeric symbols used in the decimal number system is nine.', ans:false},
+  {id:218, type:'tf', topic:'number', text:"Subtract 62 from 101 in two's complement format gives 11000010.", ans:false},
+  {id:219, type:'tf', topic:'number', text:'While performing addition for floating-point numbers, if the signs are the same, we add the numbers and assign the sign to the result.', ans:true},
+  {id:220, type:'tf', topic:'logic', text:'The NOT operator on the bit pattern <code>10011000</code> is <code>01100110</code>.', ans:true},
+  {id:221, type:'tf', topic:'logic', text:'To leave a bit in the target pattern unchanged, use 0 for the corresponding bit in the XOR mask.', ans:false},
+  {id:222, type:'tf', topic:'logic', text:'To leave a bit in the target pattern unchanged, use 0 for the corresponding bit in the mask.', ans:true},
+  {id:223, type:'tf', topic:'number', text:'In sign-and-magnitude representation, if the leftmost bit is 1, then the number is negative.', ans:true},
+  {id:224, type:'tf', topic:'number', text:'In sign-and-magnitude representation, if the leftmost bit is 0, then the number is positive.', ans:true},
+  {id:225, type:'tf', topic:'number', text:'In sign-and-magnitude representation, if the leftmost bit is 0, then the number is negative.', ans:false},
+  {id:226, type:'tf', topic:'memory', text:'The user is allowed to read but not write to ROM.', ans:true},
+  {id:227, type:'tf', topic:'algorithm', text:'Algorithm is a step-by-step procedure for solving a problem.', ans:true},
+  {id:228, type:'tf', topic:'coding', text:'Information is a raw material from which you can draw conclusions.', ans:false},
+];
+
+// ── STATE ──
+let currentFilter = {topic:'all', answered:'all', search:''};
+let currentMode = 'browse';
+let answerMap = {};  // id -> 'correct' | 'wrong'
+let quizPool = [];
+let quizIdx = 0;
+let quizAnswered = {};
+
+// ── INIT ──
+function init() {
+  updateCounts();
+  renderBrowse();
+}
+
+function updateCounts() {
+  const topics = ['network','memory','number','logic','coding','algorithm'];
+  document.getElementById('cnt-all').textContent = QUESTIONS.length;
+  topics.forEach(t => {
+    const el = document.getElementById('cnt-' + t);
+    if(el) el.textContent = QUESTIONS.filter(q=>q.topic===t).length;
+  });
+  document.getElementById('cnt-mcq').textContent = QUESTIONS.filter(q=>q.type==='mcq').length;
+  document.getElementById('cnt-tf').textContent = QUESTIONS.filter(q=>q.type==='tf').length;
+}
+
+function updateStats() {
+  const answered = Object.keys(answerMap).length;
+  const correct = Object.values(answerMap).filter(v=>v==='correct').length;
+  const wrong = answered - correct;
+  document.getElementById('stat-answered').textContent = answered;
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent = wrong;
+  document.getElementById('stat-acc').textContent = answered ? Math.round(correct/answered*100)+'%' : '—';
+}
+
+// ── FILTER / SEARCH ──
+function filterTopic(topic, btn) {
+  currentFilter.topic = topic;
+  document.querySelectorAll('.sidebar-nav .nav-item').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(currentMode === 'browse') renderBrowse();
+}
+
+function filterAnswered(type, btn) {
+  currentFilter.answered = type;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBrowse();
+}
+
+function searchQuestions(val) {
+  currentFilter.search = val.toLowerCase();
+  renderBrowse();
+}
+
+function getFiltered() {
+  return QUESTIONS.filter(q => {
+    if(currentFilter.topic !== 'all' && currentFilter.topic !== 'mcq' && currentFilter.topic !== 'tf') {
+      if(q.topic !== currentFilter.topic) return false;
+    }
+    if(currentFilter.topic === 'mcq' && q.type !== 'mcq') return false;
+    if(currentFilter.topic === 'tf' && q.type !== 'tf') return false;
+    if(currentFilter.answered === 'correct' && answerMap[q.id] !== 'correct') return false;
+    if(currentFilter.answered === 'wrong' && answerMap[q.id] !== 'wrong') return false;
+    if(currentFilter.answered === 'unanswered' && answerMap[q.id]) return false;
+    if(currentFilter.search) {
+      const plain = q.text.replace(/<[^>]+>/g,'').toLowerCase();
+      if(!plain.includes(currentFilter.search)) return false;
+    }
+    return true;
+  });
+}
+
+// ── BROWSE RENDER ──
+function renderBrowse() {
+  const qs = getFiltered();
+  const grid = document.getElementById('q-grid');
+  const empty = document.getElementById('empty-state');
+  const countLabel = document.getElementById('q-count-label');
+  const sectionTitle = document.getElementById('section-title');
+
+  const topicNames = {all:'All Questions',network:'Networks',memory:'Memory & Storage',
+    number:'Number Systems',logic:'Logic Operations',coding:'Data Representation',
+    algorithm:'Algorithms',mcq:'Multiple Choice',tf:'True / False'};
+  sectionTitle.textContent = topicNames[currentFilter.topic] || 'All Questions';
+  countLabel.textContent = qs.length + ' question' + (qs.length!==1?'s':'');
+
+  if(qs.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  grid.innerHTML = qs.map((q, i) => buildCard(q, i+1)).join('');
+  // restore open state
+  qs.forEach(q => {
+    const card = document.getElementById('qcard-'+q.id);
+    if(!card) return;
+    if(answerMap[q.id]) {
+      card.setAttribute('data-answered', answerMap[q.id]);
+    }
+  });
+}
+
+function buildCard(q, num) {
+  const tagMap = {network:'tag-network',memory:'tag-memory',number:'tag-number',logic:'tag-logic',coding:'tag-coding',algorithm:'tag-algorithm'};
+  const tagLabel = {network:'Networks',memory:'Memory',number:'Numbers',logic:'Logic',coding:'Data Rep.',algorithm:'Algorithms'};
+  const typeCls = q.type==='tf'?'tag-tf':'tag-mcq';
+  const typeLabel = q.type==='tf'?'T/F':'MCQ';
+  const answered = answerMap[q.id];
+
+  let bodyHTML = '';
+  if(q.type === 'mcq') {
+    const letters = ['A','B','C','D'];
+    const optsHTML = q.opts.map((o,j) => {
+      let cls = '';
+      if(answered) {
+        if(j === q.ans) cls = answered==='wrong' ? 'reveal' : 'correct-pick';
+        else if(answered==='wrong' && answerMap[q.id+'_sel']===j) cls = 'wrong-pick';
+      }
+      return `<button class="option-btn ${cls}" ${answered?'disabled':''} onclick="pickBrowse(${q.id},${j},${q.ans},this)">
+        <span class="opt-letter">${letters[j]}</span><span>${o}</span>
+      </button>`;
+    }).join('');
+    let fbHTML = '';
+    if(answered) {
+      fbHTML = answered==='correct'
+        ? `<div class="feedback-bar correct"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Correct!</div>`
+        : `<div class="feedback-bar wrong"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg> Incorrect — correct answer is <strong>${letters[q.ans]}</strong>.</div>`;
+    }
+    bodyHTML = `<div class="q-full-text">${q.text}</div>
+      <div class="options-list">${optsHTML}</div>
+      ${fbHTML}`;
+  } else {
+    let tCls='', fCls='';
+    if(answered) {
+      if(q.ans===true) { tCls='correct-pick'; fCls=answerMap[q.id+'_sel']===false?'wrong-pick':''; }
+      else { fCls='correct-pick'; tCls=answerMap[q.id+'_sel']===true?'wrong-pick':''; }
+    }
+    let fbHTML = '';
+    if(answered) {
+      fbHTML = answered==='correct'
+        ? `<div class="feedback-bar correct"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Correct!</div>`
+        : `<div class="feedback-bar wrong"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg> Incorrect — the statement is <strong>${q.ans?'True':'False'}</strong>.</div>`;
+    }
+    bodyHTML = `<div class="q-full-text">${q.text}</div>
+      <div class="tf-options">
+        <button class="option-btn ${tCls}" ${answered?'disabled':''} onclick="pickBrowseTF(${q.id},true,${q.ans},this)">
+          <span class="opt-letter">T</span><span>True</span>
+        </button>
+        <button class="option-btn ${fCls}" ${answered?'disabled':''} onclick="pickBrowseTF(${q.id},false,${q.ans},this)">
+          <span class="opt-letter">F</span><span>False</span>
+        </button>
+      </div>
+      ${fbHTML}`;
+  }
+
+  return `<div class="q-card" id="qcard-${q.id}" data-answered="${answered||''}">
+    <div class="q-card-header" onclick="toggleCard(${q.id})">
+      <span class="q-number">#${String(num).padStart(3,'0')}</span>
+      <div class="answered-dot"></div>
+      <div class="q-text-preview">${q.text}</div>
+      <div class="q-tags">
+        <span class="tag ${tagMap[q.topic]}">${tagLabel[q.topic]}</span>
+        <span class="tag ${typeCls}">${typeLabel}</span>
+      </div>
+      <svg class="q-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div class="q-card-body">${bodyHTML}</div>
+  </div>`;
+}
+
+function toggleCard(id) {
+  const card = document.getElementById('qcard-'+id);
+  if(card) card.classList.toggle('open');
+}
+
+function pickBrowse(qid, sel, ans, btn) {
+  if(answerMap[qid]) return;
+  const isCorrect = sel === ans;
+  answerMap[qid] = isCorrect ? 'correct' : 'wrong';
+  answerMap[qid+'_sel'] = sel;
+  updateStats();
+  const card = document.getElementById('qcard-'+qid);
+  card.setAttribute('data-answered', answerMap[qid]);
+  const q = QUESTIONS.find(q=>q.id===qid);
+  const letters = ['A','B','C','D'];
+  const opts = card.querySelectorAll('.option-btn');
+  opts.forEach((b,j) => {
+    b.disabled = true;
+    b.classList.remove('correct-pick','wrong-pick','reveal');
+    if(j===ans) b.classList.add(isCorrect?'correct-pick':'reveal');
+    else if(j===sel && !isCorrect) b.classList.add('wrong-pick');
+  });
+  const body = card.querySelector('.q-card-body');
+  let fb = body.querySelector('.feedback-bar');
+  if(fb) fb.remove();
+  const fbEl = document.createElement('div');
+  fbEl.className = 'feedback-bar ' + (isCorrect?'correct':'wrong');
+  fbEl.innerHTML = isCorrect
+    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Correct!`
+    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg> Incorrect — correct answer is <strong>${letters[ans]}</strong>.`;
+  body.appendChild(fbEl);
+}
+
+function pickBrowseTF(qid, val, ans, btn) {
+  if(answerMap[qid]) return;
+  const isCorrect = val === ans;
+  answerMap[qid] = isCorrect ? 'correct' : 'wrong';
+  answerMap[qid+'_sel'] = val;
+  updateStats();
+  const card = document.getElementById('qcard-'+qid);
+  card.setAttribute('data-answered', answerMap[qid]);
+  const opts = card.querySelectorAll('.tf-options .option-btn');
+  opts.forEach(b => {
+    b.disabled = true;
+    b.classList.remove('correct-pick','wrong-pick','reveal');
+  });
+  const trueBtn = opts[0], falseBtn = opts[1];
+  if(ans === true) {
+    trueBtn.classList.add('correct-pick');
+    if(!isCorrect) falseBtn.classList.add('wrong-pick');
+  } else {
+    falseBtn.classList.add('correct-pick');
+    if(!isCorrect) trueBtn.classList.add('wrong-pick');
+  }
+  const body = card.querySelector('.q-card-body');
+  let fb = body.querySelector('.feedback-bar');
+  if(fb) fb.remove();
+  const fbEl = document.createElement('div');
+  fbEl.className = 'feedback-bar ' + (isCorrect?'correct':'wrong');
+  fbEl.innerHTML = isCorrect
+    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Correct!`
+    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg> Incorrect — the statement is <strong>${ans?'True':'False'}</strong>.`;
+  body.appendChild(fbEl);
+}
+
+// ── MODE ──
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('mode-browse').classList.toggle('active', mode==='browse');
+  document.getElementById('mode-quiz').classList.toggle('active', mode==='quiz');
+  document.getElementById('browse-wrap').classList.toggle('hidden', mode!=='browse');
+  document.getElementById('quiz-wrap').classList.toggle('active', mode==='quiz');
+  if(mode==='quiz') startQuiz();
+}
+
+// ── QUIZ MODE ──
+function startQuiz() {
+  const filtered = getFiltered();
+  quizPool = shuffle([...filtered]);
+  quizIdx = 0;
+  quizAnswered = {};
+  renderQuiz();
+}
+
+function shuffle(arr) {
+  for(let i=arr.length-1;i>0;i--) {
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function renderQuiz() {
+  const wrap = document.getElementById('quiz-inner');
+  if(quizPool.length === 0) {
+    wrap.innerHTML = `<div class="quiz-card" style="text-align:center;padding:48px">
+      <p style="color:var(--text-secondary);margin-bottom:16px">No questions available for the current filter.</p>
+      <button class="restart-btn" onclick="setMode('browse')">Go to browse</button>
+    </div>`;
+    return;
+  }
+  if(quizIdx >= quizPool.length) {
+    renderResults();
+    return;
+  }
+  const q = quizPool[quizIdx];
+  const pct = Math.round(quizIdx/quizPool.length*100);
+  const tagMap = {network:'tag-network',memory:'tag-memory',number:'tag-number',logic:'tag-logic',coding:'tag-coding',algorithm:'tag-algorithm'};
+  const tagLabel = {network:'Networks',memory:'Memory',number:'Numbers',logic:'Logic',coding:'Data Rep.',algorithm:'Algorithms'};
+
+  let optionsHTML = '';
+  if(q.type === 'mcq') {
+    const letters = ['A','B','C','D'];
+    optionsHTML = `<div class="quiz-options">` +
+      q.opts.map((o,j)=>`<button class="quiz-option option-btn" onclick="quizPick(${q.id},${j},${q.ans},this)">
+        <span class="opt-letter">${letters[j]}</span><span>${o}</span>
+      </button>`).join('') + `</div>`;
+  } else {
+    optionsHTML = `<div class="quiz-options">
+      <button class="quiz-option option-btn" onclick="quizPickTF(${q.id},true,${q.ans},this)">
+        <span class="opt-letter">T</span><span>True</span>
+      </button>
+      <button class="quiz-option option-btn" onclick="quizPickTF(${q.id},false,${q.ans},this)">
+        <span class="opt-letter">F</span><span>False</span>
+      </button>
+    </div>`;
+  }
+
+  wrap.innerHTML = `<div class="quiz-card">
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar-wrap"><div class="quiz-progress-bar" style="width:${pct}%"></div></div>
+      <span class="quiz-progress-text">${quizIdx+1} / ${quizPool.length}</span>
+    </div>
+    <div class="quiz-q-tag">
+      <span class="tag ${tagMap[q.topic]}">${tagLabel[q.topic]}</span>
+      <span class="tag ${q.type==='tf'?'tag-tf':'tag-mcq'}" style="margin-left:4px">${q.type==='tf'?'T/F':'MCQ'}</span>
+    </div>
+    <div class="quiz-q-text">${q.text}</div>
+    ${optionsHTML}
+    <div id="quiz-fb" style="margin-bottom:12px"></div>
+    <div class="quiz-nav">
+      <button class="quiz-nav-btn" onclick="quizPrev()" id="quiz-prev" ${quizIdx===0?'disabled':''}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg> Previous
+      </button>
+      <button class="quiz-nav-btn primary" onclick="quizNext()" id="quiz-next">
+        ${quizIdx===quizPool.length-1?'See results':'Next'} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>`;
+
+  // Restore if already answered
+  const qa = quizAnswered[q.id];
+  if(qa) restoreQuizState(q, qa);
+}
+
+function quizPick(qid, sel, ans, btn) {
+  if(quizAnswered[qid]) return;
+  const isCorrect = sel === ans;
+  quizAnswered[qid] = {sel, ans, correct: isCorrect, type:'mcq'};
+  answerMap[qid] = isCorrect?'correct':'wrong';
+  answerMap[qid+'_sel'] = sel;
+  updateStats();
+  const letters = ['A','B','C','D'];
+  document.querySelectorAll('.quiz-option').forEach((b,j) => {
+    b.disabled = true;
+    if(j===ans) b.classList.add(isCorrect?'correct-pick':'reveal');
+    else if(j===sel && !isCorrect) b.classList.add('wrong-pick');
+  });
+  showQuizFB(isCorrect, isCorrect?'':'Correct answer: '+letters[ans]);
+}
+
+function quizPickTF(qid, val, ans, btn) {
+  if(quizAnswered[qid]) return;
+  const isCorrect = val === ans;
+  quizAnswered[qid] = {sel:val, ans, correct: isCorrect, type:'tf'};
+  answerMap[qid] = isCorrect?'correct':'wrong';
+  answerMap[qid+'_sel'] = val;
+  updateStats();
+  const btns = document.querySelectorAll('.quiz-option');
+  btns.forEach(b => b.disabled = true);
+  if(ans===true) {
+    btns[0].classList.add('correct-pick');
+    if(!isCorrect) btns[1].classList.add('wrong-pick');
+  } else {
+    btns[1].classList.add('correct-pick');
+    if(!isCorrect) btns[0].classList.add('wrong-pick');
+  }
+  showQuizFB(isCorrect, isCorrect?'':'The statement is '+( ans?'True':'False' )+'.');
+}
+
+function showQuizFB(correct, extra) {
+  const fb = document.getElementById('quiz-fb');
+  if(!fb) return;
+  fb.innerHTML = `<div class="feedback-bar ${correct?'correct':'wrong'}">
+    ${correct
+      ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Correct!`
+      : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg> Incorrect. ${extra}`
+    }
+  </div>`;
+}
+
+function restoreQuizState(q, qa) {
+  const btns = document.querySelectorAll('.quiz-option');
+  btns.forEach(b=>b.disabled=true);
+  if(qa.type==='mcq') {
+    btns.forEach((b,j) => {
+      if(j===qa.ans) b.classList.add(qa.correct?'correct-pick':'reveal');
+      else if(j===qa.sel && !qa.correct) b.classList.add('wrong-pick');
+    });
+    const letters = ['A','B','C','D'];
+    showQuizFB(qa.correct, qa.correct?'':'Correct answer: '+letters[qa.ans]);
+  } else {
+    if(qa.ans===true) {
+      btns[0].classList.add('correct-pick');
+      if(!qa.correct) btns[1].classList.add('wrong-pick');
+    } else {
+      btns[1].classList.add('correct-pick');
+      if(!qa.correct) btns[0].classList.add('wrong-pick');
+    }
+    showQuizFB(qa.correct, qa.correct?'':'The statement is '+(qa.ans?'True':'False')+'.');
+  }
+}
+
+function quizNext() {
+  if(quizIdx < quizPool.length-1) { quizIdx++; renderQuiz(); }
+  else renderResults();
+}
+
+function quizPrev() {
+  if(quizIdx > 0) { quizIdx--; renderQuiz(); }
+}
+
+function renderResults() {
+  const total = quizPool.length;
+  const correct = Object.values(quizAnswered).filter(a=>a.correct).length;
+  const wrong = Object.values(quizAnswered).filter(a=>!a.correct).length;
+  const skipped = total - Object.keys(quizAnswered).length;
+  const pct = Math.round(correct/total*100);
+  const grade = pct>=90?'Excellent':pct>=75?'Very good':pct>=60?'Pass':'Needs review';
+  const gradeCls = pct>=90?'excellent':pct>=75?'good':pct>=60?'pass':'fail';
+
+  document.getElementById('quiz-inner').innerHTML = `<div class="results-card">
+    <div class="results-score">${pct}%</div>
+    <div class="results-score-label">${correct} correct out of ${total} questions</div>
+    <div class="results-grade ${gradeCls}">${grade}</div>
+    <div class="results-breakdown">
+      <div class="rb-item"><div class="rb-num c">${correct}</div><div class="rb-lbl">Correct</div></div>
+      <div class="rb-item"><div class="rb-num w">${wrong}</div><div class="rb-lbl">Wrong</div></div>
+      <div class="rb-item"><div class="rb-num s">${skipped}</div><div class="rb-lbl">Skipped</div></div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="restart-btn" onclick="startQuiz()">Retry quiz</button>
+      <button class="restart-btn" style="background:var(--surface);color:var(--text-primary);border:1px solid var(--border)" onclick="setMode('browse')">Browse questions</button>
+    </div>
+  </div>`;
+}
+
+init();
+</script>
+</body>
+</html>
